@@ -12,12 +12,24 @@ import reportRouter from './utils/routes/reportRoutes.js';
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.CLIENT_URL,
+  "https://task-manager-front-end-weld.vercel.app/",
+  "https://task-manager-front-end-omega.vercel.app",
+  "https://task-manager-front-end-git-main-ashif1206s-projects.vercel.app",
+  "https://task-manager-front-1gjozg45q-ashif1206s-projects.vercel.app",
+];
+
 app.use(cors({
-    origin: [process.env.CLIENT_URL,"https://task-manager-front-end-omega.vercel.app",
-    "https://task-manager-front-end-git-main-ashif1206s-projects.vercel.app" ,"*"],
-    methods:['GET','POST','PUT','DELETE'],
-    allowedHeaders:["Content-Type", "Authorization"],
-    credentials: true,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed from this origin: " + origin));
+    }
+  },
+  credentials: true,
 }));
 
 app.use(express.json());
