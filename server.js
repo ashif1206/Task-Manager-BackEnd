@@ -13,9 +13,10 @@ import reportRouter from './utils/routes/reportRoutes.js';
 const app = express();
 
 app.use(cors({
-    origin: process.env.CLIENT_URL || "*",
+    origin: [process.env.CLIENT_URL,"https://task-manager-front-end-omega.vercel.app",
+    "https://task-manager-front-end-git-main-ashif1206s-projects.vercel.app" ,"*"],
     methods:['GET','POST','PUT','DELETE'],
-    allowedHeaders:["content-Type", "Authorization"],
+    allowedHeaders:["Content-Type", "Authorization"],
     credentials: true,
 }));
 
