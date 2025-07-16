@@ -11,13 +11,17 @@ authRouter.post("/login",login);
 authRouter.get("/profile",protect,getUserProfile);
 authRouter.put("/profile",protect,updateUserProfile);
 
-authRouter.post("/upload-image",upload.single("image"),(req,res)=>{
-    if(!req.file){
-        return hadndleRes(res,400,{success:false,message:"no file uploaded"});    
-    };
+authRouter.post("/upload-image", upload.single("image"), (req, res) => {
+  if (!req.file) {
+    return hadndleRes(res, 400, { success: false, message: "no file uploaded" });
+  }
 
-    const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
-    return hadndleRes(res,200,{success:true,message:"file uploaded Successfully", imageUrl})
+  const imageUrl = `${process.env.SERVER_URL}/uploads/${req.file.filename}`;
+  return hadndleRes(res, 200, {
+    success: true,
+    message: "file uploaded Successfully",
+    imageUrl,
+  });
 });
 
 
